@@ -3,6 +3,8 @@ import cors from 'cors'  //Middleware to allow cross-origin requests. Useful whe
 import 'dotenv/config'
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
+import userRouter from './routes/userRoute.js';
+import productRouter from './routes/productRoute.js';
 
 //app config
 const app = express();
@@ -15,8 +17,10 @@ app.use(express.json()) //Parses the JSON body of incoming requests
 app.use(cors())
 
 //api endpoints and routes(get post update delete)
+app.use('/api/user',userRouter)
+app.use('/api/product',productRouter)
 app.get('/',(req,res)=>{
-     res.send("hi")
+     res.send("hi") 
 })
 
 
