@@ -8,4 +8,4 @@ const storage = multer.diskStorage({  //which means the file will be saved on yo
 
 const upload = multer({storage})
 
-export default upload
+export default upload 
