@@ -5,6 +5,8 @@ import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRoute.js';
 import productRouter from './routes/productRoute.js';
+import categoryRoute from './routes/categoryRoute.js';
+import brandRoute from './routes/brandRoute.js';
 
 //app config
 const app = express();
@@ -19,6 +21,8 @@ app.use(cors())
 //api endpoints and routes(get post update delete)
 app.use('/api/user',userRouter)
 app.use('/api/product',productRouter)
+app.use('/api/category',categoryRoute)
+app/use('/api/brand',brandRoute)
 app.get('/',(req,res)=>{
      res.send("hi") 
 })
