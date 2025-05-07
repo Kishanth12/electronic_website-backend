@@ -22,7 +22,7 @@ app.use(cors())
 app.use('/api/user',userRouter)
 app.use('/api/product',productRouter)
 app.use('/api/category',categoryRoute)
-app/use('/api/brand',brandRoute)
+app.use('/api/brand',brandRoute)
 app.get('/',(req,res)=>{
      res.send("hi") 
 })
