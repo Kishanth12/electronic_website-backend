@@ -44,10 +44,12 @@ const removeCategory=async(req,res)=>{
 
 const editCategory=async(req,res)=>{
     try {
-        await categoryModel.findByIdAndUpdate(req.body._id)
+        const { _id, ...updateData } = req.body;
+        await categoryModel.findByIdAndUpdate(req.body._id,updateData)
         res.status(201).json({success:true, message:"category updated"})
     } catch (error) {
       res.status(500).json({success:false,message:"error in update category"})
+      console.log(error)
     }
 }
 export  {addCategory,listCategory,removeCategory,editCategory};

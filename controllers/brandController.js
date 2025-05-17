@@ -12,7 +12,7 @@ const addBrand = async (req,res)=>{
         }
         const brand = new brandModel({name})
         await brand.save()
-        res.status(201).json({message:"Brand added successfully",brand})
+        res.status(201).json({success:true,message:"Brand added successfully",brand})
     } catch (error) {
         console.log('error in adding brand',error)
         res.status(500).json({message:error.message})
