@@ -1,6 +1,6 @@
 import {v2 as cloudinary} from 'cloudinary'
 import productModel from '../models/productModel.js';
-
+import mongoose from 'mongoose';
 //add product
 const addProduct = async (req,res)=>{
   try {
@@ -20,20 +20,22 @@ const addProduct = async (req,res)=>{
     const productData = {
       name,
       description,
-      category,price:Number(price),
-      category,bestseller:bestseller ==="true"?true :false,
-      sizes:JSON.parse(sizes),
-      brand,
-      features:JSON.parse(features),
-      images:imagesUrl,
+      price:Number(price),
+      image:imagesUrl,
+      sizes:sizes ? JSON.parse(sizes) : [],
+      category: new mongoose.Types.ObjectId(category),
+      brand: new mongoose.Types.ObjectId(brand), 
+      bestseller:bestseller ==="true"?true :false,
+      features:features ? JSON.parse(features) : [],
       date:Date.now()
     }
     const product =new productModel(productData);
-    await product.save()
-    res.json({success:true,message:'product added success'})
+    const savedProduct=await product.save()
+    res.json({success:true,message:'product added success',product:savedProduct})
 
   } catch (error) {
-    res.json({status:500,success:false,message:error.message})
+    console.log(error)
+    res.status(500).json({success:false,message:error.message})
   }
 }
 
@@ -64,10 +66,17 @@ const removeProduct = async(req,res)=>{
 const productInfo = async(req,res)=>{
   try {
     const {productId} =req.body;
-    const product = await productModel.findById(productId)
-    res.json({success:true,product})
+    const product = await productModel.findById(req.body.id)
+    .populate('category', 'name')  //  Populate category name
+    .populate('brand', 'name'); 
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+    res.json({success:true,message:"product got success",product})
 
   } catch (error) {
+    console.log(error)
     res.json({success:false,message:error.message})
 
   }

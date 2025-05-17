@@ -15,7 +15,7 @@ const addCategory = async (req,res)=>{
         }
         const category =new categoryModel({name})
         await category.save()
-        res.status(201).json({ message: 'Category created successfully', category });
+        res.status(201).json({success:true, message: 'Category created successfully', category });
     } catch (error) {
         console.error('Error adding category:', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -42,4 +42,12 @@ const removeCategory=async(req,res)=>{
     }
 }
 
-export  {addCategory,listCategory,removeCategory};
+const editCategory=async(req,res)=>{
+    try {
+        await categoryModel.findByIdAndUpdate(req.body._id)
+        res.status(201).json({success:true, message:"category updated"})
+    } catch (error) {
+      res.status(500).json({success:false,message:"error in update category"})
+    }
+}
+export  {addCategory,listCategory,removeCategory,editCategory};
