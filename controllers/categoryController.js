@@ -44,9 +44,12 @@ const removeCategory=async(req,res)=>{
 
 const editCategory=async(req,res)=>{
     try {
-        const { _id, ...updateData } = req.body;
-        await categoryModel.findByIdAndUpdate(req.body._id,updateData)
-        res.status(201).json({success:true, message:"category updated"})
+        const {id, ...updateData } = req.body;
+        const updated= await categoryModel.findByIdAndUpdate(id,updateData, { new: true })
+        if(!updated){
+           return res.status(500).json({success:false,message:"update failed"})
+        }
+        return res.status(200).json({success:true, message:"category updated"})
     } catch (error) {
       res.status(500).json({success:false,message:"error in update category"})
       console.log(error)

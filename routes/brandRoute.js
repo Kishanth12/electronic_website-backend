@@ -1,11 +1,13 @@
 import express from 'express'
-import { addBrand, listBrand, removeBrand } from '../controllers/brandController.js';
+import { addBrand, editBrand, listBrand, removeBrand } from '../controllers/brandController.js';
 
 const brandRoute = express.Router();
 
 brandRoute.post('/add',addBrand);
-brandRoute.post('/list',listBrand)
-brandRoute.post('/remove',removeBrand)
+brandRoute.get('/list',listBrand)
+brandRoute.delete('/remove',removeBrand)
+brandRoute.put('/edit',editBrand)
+
 
 
 export default brandRoute;

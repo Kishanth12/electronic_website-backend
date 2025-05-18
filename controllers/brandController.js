@@ -32,11 +32,26 @@ const listBrand = async (req,res)=>{
 const removeBrand = async (req,res)=>{
     try {
         await brandModel.findByIdAndDelete(req.body.id)
-        res.status(201).json({success:true,message:"brand deleted success"})
+        res.status(200).json({success:true,message:"brand deleted success"})
     } catch (error) {
         console.log(error,"error in delete brand")
-        res.status(500),json({success:false,message:"error in delete brand"})
+        res.status(500).json({success:false,message:"error in delete brand"})
     }
 }
 
-export {addBrand,removeBrand,listBrand}
+const editBrand = async (req,res)=>{
+    try {
+        const {id,...updateData}=req.body;
+        const updated =await brandModel.findByIdAndUpdate(id,updateData,{new:true})
+        if(!updated){
+        return res.status(500).json({success:false,message:"updated failed"})
+        }
+       return res.status(200).json({success:true,message:"updated success",brand: updated})
+    } catch (error) {
+        res.status(500).json({success:false,message:"internal server error"})
+        console.log(error)
+    }
+   
+}
+
+export {addBrand,removeBrand,listBrand,editBrand}
