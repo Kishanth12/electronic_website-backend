@@ -2,6 +2,7 @@ import validator from 'validator'
 import userModel from './../models/userModel.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import productModel from '../models/productModel.js';
 
 
 
@@ -24,6 +25,7 @@ const loginUser = async (req,res)=>{
      }
      else{
           return res.status(500).json({success:false,message:"User Login Failed"})
+          
      }
     } catch (error) {
       console.log(error)
@@ -86,4 +88,34 @@ const adminLogin = async (req,res)=>{
      }
 }
 
-export {loginUser,registerUser,adminLogin}
+//user add reviews
+const addReview = async (req, res) => {
+    try {
+        const { productId,userId, comment, rating } = req.body;
+
+        if (!productId || !userId || !comment || !rating) {
+            return res.status(400).json({ message: 'Fields are are required.' });
+        }
+
+        const product = await productModel.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found.' });
+        }
+
+        product.reviews.push({
+          user:userId, 
+          comment, 
+          rating
+    });
+        await product.save();
+
+        res.status(201).json({success: true, message: "Review added successfully", reviews: product.reviews});
+
+    } catch (error) {
+        console.log('Error in adding review:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+export {loginUser,registerUser,adminLogin,addReview}

@@ -42,7 +42,7 @@ const addProduct = async (req,res)=>{
 //list product
 const listProducts = async (req,res)=>{
    try {
-    const products = await productModel.find({});
+    const products = await productModel.find({}).populate('category', 'name').populate('brand','name');
       res.json({success:true,products})
     
    } catch (error) {
@@ -81,5 +81,7 @@ const productInfo = async(req,res)=>{
 
   }
 }
+
+
 
 export {addProduct,removeProduct,productInfo,listProducts};

@@ -8,8 +8,13 @@ const productSchema = new mongoose.Schema({
     sizes:[{type: String ,required :true}],
     category: { type: mongoose.Schema.Types.ObjectId, ref: "category", required: true },
     brand: { type: mongoose.Schema.Types.ObjectId, ref: "brand", required: true },
-    BestSeller:{type: Boolean},
+    bestSeller:{type: Boolean},
     features:[{type: String ,required :true}],
+    reviews: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
+    comment: { type: String, required: true },
+    rating: { type: Number, min: 1, max: 5 },
+    date: { type: Date, default: Date.now } }],
     date:{type: Date ,default:Date.now},
 });
 
