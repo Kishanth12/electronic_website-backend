@@ -25,7 +25,7 @@ const addCategory = async (req,res)=>{
 const listCategory=async(req,res)=>{
     try {
         const categories =await categoryModel.find({});
-        res.status(201).json({success:true,message:"categories listed" ,categories})
+        res.status(200).json({success:true,message:"categories listed" ,categories})
     } catch (error) {
         console.log(error,"error in finding categories")
         res.status(500).json({success:false,message:"error in list categories"})
