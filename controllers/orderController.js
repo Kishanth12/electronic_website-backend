@@ -28,6 +28,11 @@ const placeOrder= async(req,res)=>{
 
 //for admin
 const allOrders=async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
  
 }
 
