@@ -20,12 +20,4 @@ lerna-debug.log*
 !.vscode/extensions.json
 .idea/
 
-# Visual Studio project files
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
 
-# Swap files (temporary files from editors like Vim)
-*.swp
-*.swo
