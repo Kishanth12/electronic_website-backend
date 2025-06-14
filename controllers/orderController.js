@@ -5,7 +5,8 @@ import userModel from './../models/userModel.js';
 
 const placeOrder= async(req,res)=>{
    try {
-     const {userId,items,amount,address}= req.body;
+     const {items,amount,address}= req.body;
+     const userId = req.user.userId;
      const orderData ={
         userId,
         items,
@@ -30,7 +31,7 @@ const placeOrder= async(req,res)=>{
 const allOrders=async(req,res)=>{
   try {
     const orders = await orderModel.find({})
-    res,json({success:true,orders})
+    res.json({success:true,orders})
   } catch (error) {
     console.log(error)
      res.json({success:false,message:error.message})
@@ -41,7 +42,7 @@ const allOrders=async(req,res)=>{
 //for frontend
 const userOrders = async(req,res)=>{
   try {
-    const {userId}=req.body;
+    const userId = req.user.userId;
     const orders = await orderModel.find({userId})
     res.json({success:true,orders})
   } catch (error) {

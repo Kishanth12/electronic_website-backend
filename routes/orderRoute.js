@@ -10,6 +10,6 @@ orderRouter.post('/status',adminAuth,updateStatus)
 
 orderRouter.post('/place',authUser,placeOrder)
 
-orderRouter.post('/userOrders',authUser,userOrders)
+orderRouter.get('/userOrders',authUser,userOrders)
 
 export default orderRouter;
